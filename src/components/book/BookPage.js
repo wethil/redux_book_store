@@ -11,24 +11,43 @@ class Book extends React.Component{
     this.props.createBook(input);
   }
 
+  edit(book){
+    console.log('book')
+    console.log(book)
+    this.props.edit(book)
+  }
+
   render(){
     let titleInput;
+    let descInput;
     console.log(this.props.books)
     return(
       <div>
         <h3>Books</h3>
         <ul>
-          {this.props.books.map((b, i) => <li key={i}>{b.title}</li> )}
+          {this.props.books.map((b, i) => <li key={i}>{b.title} {b.desc} 
+            <button onClick={ e => {
+                e.preventDefault()
+                this.edit(b)
+              }
+            } > change </button>
+           </li> )}
         </ul>
         <div>
           <h3>Books Form</h3>
           <form onSubmit={e => {
             e.preventDefault();
-            var input = {title: titleInput.value};
+            var input = {
+              id:Date.now(),
+              title: titleInput.value,
+              desc : descInput.value
+              };
             this.submitBook(input);
             e.target.reset();
           }}>
-            <input type="text" name="title" ref={node => titleInput = node}/>
+            <input type="text" name="title" placeholder='title'  ref={node => titleInput = node}/>
+            <input type="text" name="desc" placeholder='desc' ref={node => descInput = node}/>
+            
             <input type="submit" />
           </form>
         </div>
@@ -49,7 +68,8 @@ const mapStateToProps = (state, ownProps) => {
 const mapDispatchToProps = (dispatch) => {
   return {
   // avaiable by this.props.createBook
-    createBook: book => dispatch(bookActions.createBook(book))
+    createBook: book => dispatch(bookActions.createBook(book)),
+    edit:book=> dispatch(bookActions.edit(book))
   }
 };
 
