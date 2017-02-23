@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import SingleBook from './SingleBook.js'
 import * as bookActions from '../../actions/bookActions';
 
 class Book extends React.Component{
@@ -24,15 +25,13 @@ class Book extends React.Component{
     return(
       <div>
         <h3>Books</h3>
-        <ul>
-          {this.props.books.map((b, i) => <li key={i}>{b.title} {b.desc} 
-            <button onClick={ e => {
-                e.preventDefault()
-                this.edit(b)
+        
+          {this.props.books.map((b, i) => <SingleBook book={b} onEdit={ (book) => {
+      
+                this.edit(book)
               }
-            } > change </button>
-           </li> )}
-        </ul>
+            }   />  )}
+        
         <div>
           <h3>Books Form</h3>
           <form onSubmit={e => {
@@ -45,10 +44,10 @@ class Book extends React.Component{
             this.submitBook(input);
             e.target.reset();
           }}>
-            <input type="text" name="title" placeholder='title'  ref={node => titleInput = node}/>
-            <input type="text" name="desc" placeholder='desc' ref={node => descInput = node}/>
+            <input type="text" className='form-control' name="title" placeholder='title'  ref={node => titleInput = node}/>
+            <input type="text" className='form-control' name="desc" placeholder='desc' ref={node => descInput = node}/>
             
-            <input type="submit" />
+            <input className='btn btn-primary' type="submit" />
           </form>
         </div>
       </div>

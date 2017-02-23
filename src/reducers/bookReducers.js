@@ -7,11 +7,18 @@ export default (state=[], action ) => {
                     Object.assign({}, action.book)
                 ];
          case 'EDIT' :
-                    return state.map(book =>
-        book.id === action.id ?
-          { ...book, desc: 'edited' } :
-          book
-      )
+         
+         state.map(book=>{
+             if (book.id === action.id) {
+             console.log('same')
+         }
+         })
+
+            return state.map(book =>
+                book.id === action.id ?
+                { ...book, title: action.book.title, desc:action.book.desc } :
+                book
+            )
     
         default:
             return state;   
