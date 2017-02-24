@@ -20,6 +20,10 @@ class SingleBook extends Component {
         this.setState({ editing: false })
     }
 
+    deleteBook(bookId) {
+        this.props.delete(bookId)
+    }
+
     render() {
         const {id, title, desc} = this.props.book;
 
@@ -32,6 +36,7 @@ class SingleBook extends Component {
         } else {
             element = (<h3 key={id}>{title} {desc}
                 <button className='btn btn-primary' onClick={() => this.setState({ editing: true })} > change </button>
+                <button className='btn btn-danger' onClick={() => this.deleteBook(id) }  > Delete  </button>
 
             </h3>)
         }
@@ -51,7 +56,8 @@ const mapDispatchToProps = (dispatch) => {
     return {
        
 
-        edit: book => dispatch(bookActions.edit(book))
+        edit: book => dispatch(bookActions.edit(book)),
+        delete : bookId => dispatch(bookActions.deleteBook(bookId))
     }
 };
 
